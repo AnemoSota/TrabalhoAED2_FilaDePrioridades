@@ -10,6 +10,6 @@ for i in range(n):
     lista.append(j)
     #aumentar_chave(lista, i, j)
 
-min_heapfy(lista, 0)
+min_heapify(lista, 0)
 
 print(lista)

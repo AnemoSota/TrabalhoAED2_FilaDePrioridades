@@ -4,21 +4,21 @@
 #########################
 
 def min_heapify (lista, raiz):
-    menor = raiz
+    index_menor = raiz
     tamanho_lista = len(lista)
     filho_esquerdo = 2*raiz+1
 
-    if filho_esquerdo < tamanho_lista and lista[filho_esquerdo] < lista[menor]:
-        menor = filho_esquerdo
+    if filho_esquerdo < tamanho_lista and lista[filho_esquerdo] < lista[index_menor]:
+        index_menor = filho_esquerdo
 
     filho_direito = 2*raiz+2
 
-    if filho_direito < tamanho_lista and lista[filho_direito] < lista[menor]:
-        menor = filho_direito
+    if filho_direito < tamanho_lista and lista[filho_direito] < lista[index_menor]:
+        index_menor = filho_direito
     
-    if menor != raiz:
-        troca(lista, menor, raiz)
-        min_heapify(lista,menor,tamanho_lista)
+    if index_menor != raiz:
+        troca(lista, index_menor, raiz)
+        min_heapify(lista, index_menor)
 
 #Aumenta o valor de uma chave na heap, mantendo a propriedade de heap preservada
 def aumentar_chave(heap, index, novo_valor):
