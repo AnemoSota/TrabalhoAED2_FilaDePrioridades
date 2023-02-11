@@ -3,58 +3,50 @@
 #   FUNÇÕES PARA HEAP   #
 #########################
 
-def min_heapfy(lista, i):
-	
-	tam = len(lista)
-	
-	f1 = (2*i) + 1
-	f2 = (2*i) + 2
-	
-	exf1 = False
-	exf2 = False
-	
-	if (f1 < tam) :
-		exf1 = (lista[i] > lista[f1])
-	
-	if (f2 < tam) :
-		exf2 = (lista[i] > lista[f2])
-	
-	if (exf1 and exf2) :
-		if (lista[f1] <= lista[f2]) :
-			troca(lista, f1, i)
-			min_heapfy(lista, f1)
-		else :
-			troca(lista, f2, i)
-			min_heapfy(lista, f2)
-	elif exf1 :
-		troca(lista, f1, i)
-		min_heapfy(lista, f1)
-	elif exf2 :
-		troca(lista, f2, i)
-		min_heapfy(lista, f2)
+def min_heapify (lista, raiz):
+    menor = raiz
+    tamanho_lista = len(lista)
+    filho_esquerdo = 2*raiz+1
 
-def aumentar_chave(heap, pos, novo):
-	if pos == len(heap):
-		heap.append(novo)
+    if filho_esquerdo < tamanho_lista and lista[filho_esquerdo] < lista[menor]:
+        menor = filho_esquerdo
+
+    filho_direito = 2*raiz+2
+
+    if filho_direito < tamanho_lista and lista[filho_direito] < lista[menor]:
+        menor = filho_direito
+    
+    if menor != raiz:
+        troca(lista, menor, raiz)
+        min_heapify(lista,menor,tamanho_lista)
+
+#Aumenta o valor de uma chave na heap, mantendo a propriedade de heap preservada
+def aumentar_chave(heap, index, novo_valor):
+	#caso a chave seja aumentada ao final da lista
+	if index == len(heap):
+		heap.append(novo_valor)
 	else :
-		heap[pos] = novo
-		min_heapfy(heap, pos)
-	verifica_pai(heap, pos)
+		heap[index] = novo_valor
+		min_heapify(heap, index)
+	verifica_pai(heap, index)
 
-def verifica_pai(lista, i):
-	pai = int((i-1)/2)
+#Verifica se os pais estao respeitando as propriedades da heap
+def verifica_pai(heap, index_filho):
+	index_pai = int((index_filho-1)/2)
 	
-	if pai < 0 :
+	if index_pai < 0 :
 		return
-	elif lista[pai] > lista[i] :
-		troca(lista, pai, i)
-		verifica_pai(lista, pai)
+	elif heap[index_pai] > heap[index_filho] :
+		troca(heap, index_pai, index_filho)
+		verifica_pai(heap, index_pai)
 
-def remove(heap, pos):
-	troca(heap, pos, len(heap)-1)
+#Remove um elemento de uma heap respeitando a propriedade de heap
+def remove(heap, index):
+	troca(heap, index, len(heap)-1)
 	heap.pop()
-	min_heapfy(heap, pos)
+	min_heapify(heap, index)
 
+#Troca 2 elementos de uma lista
 def troca(lista, p1, p2) :
 	aux = lista[p1]
 	lista[p1] = lista[p2]
