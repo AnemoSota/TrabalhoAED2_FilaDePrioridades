@@ -52,3 +52,10 @@ def troca(lista, p1, p2) :
 	lista[p1] = lista[p2]
 	lista[p2] = aux
 
+def naoExisteEm(estado, lista):
+	naoExiste = 1
+	
+	for i in lista:
+		naoExiste -= (i == estado)
+	
+	return naoExiste

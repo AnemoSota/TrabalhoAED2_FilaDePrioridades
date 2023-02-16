@@ -1,9 +1,12 @@
-import heap
+
+
+from heap import troca
 from random import shuffle
 
 class Tabuleiro:
     def __init__(self, vetor, passos):
         self.tabuleiro = vetor
+        self.zero = busca_zero(vetor)
         self.g = passos
         self.h = calcular_heuristica(self.tabuleiro)
         self.f = self.g + self.h    # f(x) = g(x) + h(x)
@@ -73,6 +76,13 @@ def contar_inversoes(tabuleiro):
 
     return inversoes
 
+def busca_zero(lista):
+    i = 0
+    while (i < len(lista)) and (lista[i] != 0):
+        i += 1
+    return i
+
+
 # Verifica se as posicoes podem ser trocadas
 def trocavel(i, j):
     t = True
@@ -87,3 +97,28 @@ def trocavel(i, j):
         t = False
 
     return t
+
+def trocas(vetor, i):
+    possiveis = []
+
+    if trocavel(i, i-1):
+        novo = vetor
+        troca(novo , i , i-1)
+        possiveis.append(novo)
+
+    if trocavel(i, i+1):
+        novo = vetor
+        troca(novo , i , i+1)
+        possiveis.append(novo)
+
+    if trocavel(i, i-3):
+        novo = vetor
+        troca(novo , i , i-3)
+        possiveis.append(novo)
+
+    if trocavel(i, i+3):
+        novo = vetor
+        troca(novo , i , i+3)
+        possiveis.append(novo)
+
+    return possiveis
