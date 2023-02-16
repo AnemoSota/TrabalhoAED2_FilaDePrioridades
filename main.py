@@ -1,15 +1,15 @@
 
+
 from heap import *
+from Tabuleiro import *
 
+solucao = list(range(10))
 
-n = int(input())
-lista = []
+entrada = gera_tabuuleiro_aleatorio()
 
-for i in range(n):
-    j = int(input())
-    lista.append(j)
-    #aumentar_chave(lista, i, j)
+heap = []
 
-min_heapify(lista, 0)
+heap.append(Tabuleiro(entrada, 0))
 
-print(lista)
+while heap[0].h != 0 or len(heap) == 0 :
+
