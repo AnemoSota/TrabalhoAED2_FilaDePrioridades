@@ -18,6 +18,18 @@ class Tabuleiro:
     
     def __str__(self):
         return str(self.tabuleiro)
+    
+    def imprimeTabuleiro(self):
+        print("*-----------*")
+        print("| %d | %d | %d |" %(self.tabuleiro[0], self.tabuleiro[1], self.tabuleiro[2]))
+        print("|---+---+---|")
+        print("| %d | %d | %d |" %(self.tabuleiro[3], self.tabuleiro[4], self.tabuleiro[5]))
+        print("|---+---+---|")
+        print("| %d | %d | %d |" %(self.tabuleiro[6], self.tabuleiro[7], self.tabuleiro[8]))
+        print("*-----------*")
+        print()
+
+
 
 
 # calcula uma estimativa de passos que sao necessarios para resolver o tabuleiro   
@@ -122,3 +134,4 @@ def trocas(vetor, i):
         possiveis.append(novo)
 
     return possiveis
+

@@ -1,5 +1,6 @@
 
 
+import time
 from heap import *
 from Tabuleiro import *
 
@@ -25,5 +26,9 @@ while heap[0].h != 0 or len(heap) == 0 :
     for i in novos :
         if naoExisteEm(i, historico) and naoExisteEm(i, heap):
             aumentar_chave(heap,len(heap),Tabuleiro(i , passos + 1))
+
+    time.sleep(3)
+
+    heap[0].imprimeTabuleiro()
     
 print(heap[0])
