@@ -4,9 +4,10 @@ from heap import troca
 from random import shuffle
 
 class Tabuleiro:
-    def __init__(self, vetor, passos):
+    def __init__(self, vetor, passos, historico):
         self.tabuleiro = vetor
         self.zero = busca_zero(vetor)
+        self.sequencia = [] + historico
         self.g = passos
         self.h = calcular_heuristica(self.tabuleiro)
         self.f = self.g + self.h    # f(x) = g(x) + h(x)
@@ -19,15 +20,15 @@ class Tabuleiro:
     def __str__(self):
         return str(self.tabuleiro)
     
-    def imprimeTabuleiro(self):
-        print("*-----------*")
-        print("| %d | %d | %d |" %(self.tabuleiro[0], self.tabuleiro[1], self.tabuleiro[2]))
-        print("|---+---+---|")
-        print("| %d | %d | %d |" %(self.tabuleiro[3], self.tabuleiro[4], self.tabuleiro[5]))
-        print("|---+---+---|")
-        print("| %d | %d | %d |" %(self.tabuleiro[6], self.tabuleiro[7], self.tabuleiro[8]))
-        print("*-----------*")
-        print()
+def imprimeTabuleiro(vetor):
+    print("*-----------*")
+    print("| %d | %d | %d |" %(vetor[0], vetor[1], vetor[2]))
+    print("|---+---+---|")
+    print("| %d | %d | %d |" %(vetor[3], vetor[4], vetor[5]))
+    print("|---+---+---|")
+    print("| %d | %d | %d |" %(vetor[6], vetor[7], vetor[8]))
+    print("*-----------*")
+    print()
 
 
 

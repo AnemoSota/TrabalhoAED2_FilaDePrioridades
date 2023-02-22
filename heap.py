@@ -43,8 +43,9 @@ def verifica_pai(heap, index_filho):
 #Remove um elemento de uma heap respeitando a propriedade de heap
 def remove(heap, index):
 	troca(heap, index, len(heap)-1)
-	heap.pop()
+	removido = heap.pop()
 	min_heapify(heap, index)
+	return removido
 
 #Troca 2 elementos de uma lista
 def troca(lista, p1, p2) :
@@ -56,6 +57,6 @@ def naoExisteEm(estado, lista):
 	naoExiste = 1
 	
 	for i in lista:
-		naoExiste -= (i == estado)
+		naoExiste -= (i.tabuleiro == estado)
 	
 	return naoExiste

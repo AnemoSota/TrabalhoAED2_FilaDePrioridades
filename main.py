@@ -6,29 +6,32 @@ from Tabuleiro import *
 
 solucao = list(range(10))
 
-#entrada = gerar_tabuleiro_aleatorio()
-entrada = [1,0,2,3,4,5,6,7,8,9]
+entrada = gerar_tabuleiro_aleatorio()
+#entrada = [1,0,2,3,4,5,6,7,8,9]
 
 print(entrada)
 
 heap = []
 historico = []
 
-heap.append(Tabuleiro(entrada, 0))
+heap.append(Tabuleiro(entrada, 0, []))
 
 while heap[0].h != 0 or len(heap) == 0 :
-    passos = heap[0].g
+    topo = remove(heap, 0)
+    historico.append(topo)
 
-    historico.append(heap[0])
+    topo.sequencia.append(topo.tabuleiro)
+
+    novos = trocas(topo.tabuleiro, topo.zero)
     
-    novos = trocas(heap[0].tabuleiro, heap[0].zero)
-    remove(heap, 0)
     for i in novos :
         if naoExisteEm(i, historico) and naoExisteEm(i, heap):
-            aumentar_chave(heap,len(heap),Tabuleiro(i , passos + 1))
+            aumentar_chave(heap,len(heap),Tabuleiro(i , topo.g + 1, topo.sequencia))
 
-    time.sleep(3)
-
-    heap[0].imprimeTabuleiro()
+if(len(heap) == 0):
+    print("sem solucao")
+else:
+    for i in heap[0].sequencia :
+        imprimeTabuleiro(i)
     
 print(heap[0])
