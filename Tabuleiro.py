@@ -113,23 +113,27 @@ def trocavel(i, j):
 def trocas(vetor, i):
     possiveis = []
 
+    novo = []
     if trocavel(i, i-1):
-        novo = vetor
+        novo += vetor
         troca(novo , i , i-1)
         possiveis.append(novo)
 
+    novo = []
     if trocavel(i, i+1):
-        novo = vetor
+        novo += vetor
         troca(novo , i , i+1)
         possiveis.append(novo)
 
+    novo = []
     if trocavel(i, i-3):
-        novo = vetor
+        novo += vetor
         troca(novo , i , i-3)
         possiveis.append(novo)
 
+    novo = []
     if trocavel(i, i+3):
-        novo = vetor
+        novo += vetor
         troca(novo , i , i+3)
         possiveis.append(novo)
 
