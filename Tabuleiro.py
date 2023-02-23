@@ -1,6 +1,6 @@
 
 
-from heap import troca
+from heap import *
 from random import shuffle
 
 class Tabuleiro:
@@ -140,3 +140,28 @@ def trocas(vetor, i):
 
     return possiveis
 
+def resolve(entrada):
+
+    heap = []
+    historico = []
+
+    heap.append(Tabuleiro(entrada, 0, []))
+
+    while heap[0].h != 0 or len(heap) == 0 :
+        topo = remove(heap, 0)
+        historico.append(topo)
+
+        topo.sequencia.append(topo.tabuleiro)
+
+        novos = trocas(topo.tabuleiro, topo.zero)
+        
+        for i in novos :
+            if naoExisteEm(i, historico) and naoExisteEm(i, heap):
+                aumentar_chave(heap,len(heap),Tabuleiro(i , topo.g + 1, topo.sequencia))
+
+    if(len(heap) == 0):
+        print("sem solucao")
+        return False
+    else:
+        heap[0].sequencia.append(heap[0].tabuleiro)
+        return heap[0].sequencia
