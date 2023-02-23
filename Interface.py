@@ -7,47 +7,44 @@ from Tabuleiro import *
 
 janela= Tk()
 
-#frame = ttk.Frame(master=janela, width=800, height=800,)
-#frame.pack()
 
-janela.title("Q-uebra-caebças de 8 peças")
+janela.title("Quebra-cabeças de 8 peças")
 janela.minsize(width=800, height=800)
 janela.maxsize(width=800, height=800)
 
 
 
+font1=('Times',22,'normal')
+a=" "
+b=1
+c=2
+d=3
+e=4
+f=5
+g=6
+h=7
+i=8
+l1=[a,b,c,d,e,f,g,h,i]
+linha,coluna=0,0
+labels=[]
+indiceX=0.5
+indiceY=0.5
+for data in l1:
+    label=ttk.Label(janela,text=data,font=font1, foreground= "red", background="white")
     
-class Table:
-     
-    def __init__(self,root):
-         
-        # code for creating table
-        for i in range(linhas):
-            for j in range(colunas):
-                 
-                self.e = Entry(root, width=20, fg='blue',
-                               font=('Arial',16,'bold'))
-                 
-                self.e.grid(row=i, column=j)
-                self.e.insert(END, lst[i][j])
- 
-# take the data
-lst = [(0,1,2),(3,4,5),(6,7,8),]
+    label.grid(row=linha,column=coluna,padx=50,pady=50)
+    coluna=coluna+1
   
-# find total number of rows and
-# columns in list
-linhas = len(lst)
-colunas = len(lst[0])
-  
-# create root window
-
-t = Table(janela)
-#t.place(x=80,y=100)
-#root.mainloop()
-#t.grid(row=0, column=1, sticky=ttk.N)
+    label.place(relx = indiceX,rely = indiceY,anchor = 'center',x=-80,y=-80)
+    indiceX+=0.1
+    if coluna>=3:
+        indiceY+=0.1
+        linha+=1
+        coluna=0
+        indiceX=0.5
 
 
-geraAleatoriosBotao= Button(janela, text="Gerar aleatorios")
+geraAleatoriosBotao= Button(janela, text="Gerar aleatorios",command= gerar_tabuleiro_aleatorio)
 geraAleatoriosBotao.place(x=10,y=10)
 
 geraAleatoriosBotao.configure(height = 10,
@@ -58,7 +55,9 @@ Resolver.place(x=640,y=10)
 Resolver.configure(height = 10,width = 20)
 
 
-
+global laabel
+laabel=ttk.Label(janela, text="aaa", font=('Aerial 18'))
+laabel.place(relx = indiceX,rely = indiceY,anchor = 'center',x=-60,y=85)
 
 
 
@@ -77,11 +76,6 @@ Direita.configure(height = 5,width = 10)
 Baixo= Button(janela, text=" ↓", command= gerar_tabuleiro_aleatorio)
 Baixo.place(x=360,y=600)
 Baixo.configure(height = 5,width = 10)
-
-#Tabuleiro= Button(janela, text="", command= gerar_tabuleiro_aleatorio)
-#Tabuleiro.place(x=360,y=600)
-#Tabuleiro.configure(height = 5,width = 10)
-
 
 
 
