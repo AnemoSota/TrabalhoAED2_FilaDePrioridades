@@ -15,6 +15,7 @@ global l1
 global podeAlterar
 global teclado
 global textoLabel
+global processando
 
 estadoAtual = list(range(9))
 zero = busca_zero(estadoAtual)
@@ -41,10 +42,9 @@ def trocaUp():
         zero -= 3
         atualiza()
     else:
-        global textoLabel
-        textoLabel.set("Jogada invalida!")
-        sleep(1)
-        textoLabel.set("")
+        nova = threading.Thread(target=jogadaInvalida)
+        nova.daemon = True
+        nova.start()
 
 def trocaDown():
     global estadoAtual
@@ -55,10 +55,9 @@ def trocaDown():
         zero += 3
         atualiza()
     else:
-        global textoLabel
-        textoLabel.set("Jogada invalida!")
-        sleep(1)
-        textoLabel.set("")
+        nova = threading.Thread(target=jogadaInvalida)
+        nova.daemon = True
+        nova.start()
 
 def trocaLeft():
     global estadoAtual
@@ -69,10 +68,9 @@ def trocaLeft():
         zero -= 1
         atualiza()
     else:
-        global textoLabel
-        textoLabel.set("Jogada invalida!")
-        sleep(1)
-        textoLabel.set("")
+        nova = threading.Thread(target=jogadaInvalida)
+        nova.daemon = True
+        nova.start()
 
 def trocaRight():
     global estadoAtual
@@ -83,10 +81,15 @@ def trocaRight():
         zero += 1
         atualiza()
     else:
-        global textoLabel
-        textoLabel.set("Jogada invalida!")
-        sleep(1)
-        textoLabel.set("")
+        nova = threading.Thread(target=jogadaInvalida)
+        nova.daemon = True
+        nova.start()
+
+def jogadaInvalida():
+    global textoLabel
+    textoLabel.set("Jogada invalida!")
+    sleep(1)
+    textoLabel.set("")
 
 def teclaUp():
     global teclado
@@ -137,18 +140,27 @@ def teclaRightSeta():
         trocaRight()
 
 def chamaResolver():
-    threading.Thread(target=resolver).start()
+    nova = threading.Thread(target=resolver)
+    nova.daemon = True
+    nova.start()
 
 def resolver():
     global estadoAtual
     global podeAlterar
     global zero
-    
+    global processando
+
     podeAlterar = False
+    processando = True
+
+    nova = threading.Thread(target = mensagemDeProcessamento)
+    nova.daemon = True
+    nova.start()
 
     saida = resolve(estadoAtual)
 
     if saida != False:
+        processando = False
         for i in saida:
             estadoAtual = i
             atualiza()
@@ -156,6 +168,22 @@ def resolver():
         zero = 0
 
     podeAlterar = True
+
+def mensagemDeProcessamento():
+    global processando
+    global textoLabel
+
+    while processando:
+        
+        textoLabel.set("Processando    ")
+        sleep(0.2)
+        textoLabel.set("Processando .  ")
+        sleep(0.2)
+        textoLabel.set("Processando .. ")
+        sleep(0.2)
+        textoLabel.set("Processando ...")
+        sleep(0.2)
+        textoLabel.set("")
 
 def atualiza():
     global estadoAtual
