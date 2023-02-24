@@ -5,6 +5,7 @@ from tkinter import ttk
 from Heap import *
 from Tabuleiro import *
 import threading
+import keyboard
 import os
 
 
@@ -12,6 +13,7 @@ global estadoAtual
 global zero
 global l1
 global podeAlterar
+global teclado
 
 estadoAtual = list(range(9))
 zero = busca_zero(estadoAtual)
@@ -65,6 +67,54 @@ def trocaRight():
         zero += 1
         atualiza()
 
+def teclaUp():
+    global teclado
+    while teclado:
+        keyboard.wait('w')
+        trocaUp()
+
+def teclaDown():
+    global teclado
+    while teclado:
+        keyboard.wait('s')
+        trocaDown()
+
+def teclaLeft():
+    global teclado
+    while teclado:
+        keyboard.wait('a')
+        trocaLeft()
+
+def teclaRight():
+    global teclado
+    while teclado:
+        keyboard.wait('d')
+        trocaRight()
+
+def teclaUpSeta():
+    global teclado
+    while teclado:
+        keyboard.wait("UP")
+        trocaUp()
+
+def teclaDownSeta():
+    global teclado
+    while teclado:
+        keyboard.wait("DOWN")
+        trocaDown()
+
+def teclaLeftSeta():
+    global teclado
+    while teclado:
+        keyboard.wait("LEFT")
+        trocaLeft()
+
+def teclaRightSeta():
+    global teclado
+    while teclado:
+        keyboard.wait("RIGHT")
+        trocaRight()
+
 def chamaResolver():
     threading.Thread(target=resolver).start()
 
@@ -79,7 +129,6 @@ def resolver():
 
     if saida != False:
         for i in saida:
-            imprimeTabuleiro(i)
             estadoAtual = i
             atualiza()
             sleep(1)
@@ -165,4 +214,27 @@ def telaStart():
     Baixo.place(x=360,y=530)
     Baixo.configure(height = 5,width = 10)
 
+    global teclado
+    teclado = True
+
+    threads = []
+
+    threads.append(threading.Thread(target=teclaUp))
+    threads.append(threading.Thread(target=teclaDown))
+    threads.append(threading.Thread(target=teclaLeft))
+    threads.append(threading.Thread(target=teclaRight))
+    threads.append(threading.Thread(target=teclaUpSeta))
+    threads.append(threading.Thread(target=teclaDownSeta))
+    threads.append(threading.Thread(target=teclaLeftSeta))
+    threads.append(threading.Thread(target=teclaRightSeta))
+
+    for i in threads:
+        i.start()
+
     janela.mainloop()
+
+    teclado = False
+    for i in threads:
+        i._set_tstate_lock()
+        i._stop()
+    print("sui")
