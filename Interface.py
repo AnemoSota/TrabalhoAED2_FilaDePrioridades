@@ -259,7 +259,7 @@ def telaStart():
     Cima.configure(height = 5,width = 10)
 
     Esquerda= Button(janela, text="←", command= trocaLeft)
-    Esquerda.place(x=180,y=360)
+    Esquerda.place(x=190,y=360)
     Esquerda.configure(height = 5,width = 10)
 
     Direita= Button(janela, text="→", command= trocaRight)
