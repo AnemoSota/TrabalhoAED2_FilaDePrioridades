@@ -14,6 +14,7 @@ global zero
 global l1
 global podeAlterar
 global teclado
+global textoLabel
 
 estadoAtual = list(range(9))
 zero = busca_zero(estadoAtual)
@@ -39,6 +40,11 @@ def trocaUp():
         troca(estadoAtual, zero, zero-3)
         zero -= 3
         atualiza()
+    else:
+        global textoLabel
+        textoLabel.set("Jogada invalida!")
+        sleep(1)
+        textoLabel.set("")
 
 def trocaDown():
     global estadoAtual
@@ -48,6 +54,11 @@ def trocaDown():
         troca(estadoAtual, zero, zero+3)
         zero += 3
         atualiza()
+    else:
+        global textoLabel
+        textoLabel.set("Jogada invalida!")
+        sleep(1)
+        textoLabel.set("")
 
 def trocaLeft():
     global estadoAtual
@@ -57,6 +68,11 @@ def trocaLeft():
         troca(estadoAtual, zero, zero-1)
         zero -= 1
         atualiza()
+    else:
+        global textoLabel
+        textoLabel.set("Jogada invalida!")
+        sleep(1)
+        textoLabel.set("")
 
 def trocaRight():
     global estadoAtual
@@ -66,6 +82,11 @@ def trocaRight():
         troca(estadoAtual, zero, zero+1)
         zero += 1
         atualiza()
+    else:
+        global textoLabel
+        textoLabel.set("Jogada invalida!")
+        sleep(1)
+        textoLabel.set("")
 
 def teclaUp():
     global teclado
@@ -192,8 +213,9 @@ def telaStart():
     Resolver.configure(height = 10,width = 20)
 
 
-    global laabel
-    laabel=ttk.Label(janela, text="tessssteeeeeeeesdeasdasda", font=('Aerial 18'), wraplength= 300)
+    global textoLabel
+    textoLabel = StringVar()
+    laabel=ttk.Label(janela, textvariable=textoLabel, font=('Aerial 18'), wraplength= 300)
     laabel.place(relx = indiceX,rely = indiceY,anchor = 'center',y=50)
 
 
@@ -229,12 +251,9 @@ def telaStart():
     threads.append(threading.Thread(target=teclaRightSeta))
 
     for i in threads:
+        i.daemon = True
         i.start()
 
     janela.mainloop()
 
     teclado = False
-    for i in threads:
-        i._set_tstate_lock()
-        i._stop()
-    print("sui")
