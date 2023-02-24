@@ -2,7 +2,7 @@
 from time import sleep
 from tkinter import *
 from tkinter import ttk
-from heap import *
+from Heap import *
 from Tabuleiro import *
 import threading
 

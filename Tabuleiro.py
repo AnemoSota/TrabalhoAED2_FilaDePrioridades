@@ -1,7 +1,6 @@
 
-
-from heap import *
-from random import shuffle
+import Heap
+import random
 
 class Tabuleiro:
     def __init__(self, vetor, passos, historico):
@@ -46,9 +45,9 @@ def calcular_heuristica(tabuleiro):
 # Gera um tabuleiro aleatorio que exista resolucao
 def gerar_tabuleiro_aleatorio():
     tabuleiro = [0,1,2,3,4,5,6,7,8]
-    shuffle(tabuleiro)
+    random.shuffle(tabuleiro)
     while existe_resolucao(tabuleiro) == False:
-        shuffle(tabuleiro)
+        random.shuffle(tabuleiro)
     return tabuleiro
 
 
@@ -117,25 +116,25 @@ def trocas(vetor, i):
     novo = []
     if trocavel(i, i-1):
         novo += vetor
-        troca(novo , i , i-1)
+        Heap.troca(novo , i , i-1)
         possiveis.append(novo)
 
     novo = []
     if trocavel(i, i+1):
         novo += vetor
-        troca(novo , i , i+1)
+        Heap.troca(novo , i , i+1)
         possiveis.append(novo)
 
     novo = []
     if trocavel(i, i-3):
         novo += vetor
-        troca(novo , i , i-3)
+        Heap.troca(novo , i , i-3)
         possiveis.append(novo)
 
     novo = []
     if trocavel(i, i+3):
         novo += vetor
-        troca(novo , i , i+3)
+        Heap.troca(novo , i , i+3)
         possiveis.append(novo)
 
     return possiveis
@@ -148,7 +147,7 @@ def resolve(entrada):
     heap.append(Tabuleiro(entrada, 0, []))
 
     while heap[0].h != 0 or len(heap) == 0 :
-        topo = remove(heap, 0)
+        topo = Heap.remove(heap, 0)
         historico.append(topo)
 
         topo.sequencia.append(topo.tabuleiro)
@@ -156,8 +155,8 @@ def resolve(entrada):
         novos = trocas(topo.tabuleiro, topo.zero)
         
         for i in novos :
-            if naoExisteEm(i, historico) and naoExisteEm(i, heap):
-                aumentar_chave(heap,len(heap),Tabuleiro(i , topo.g + 1, topo.sequencia))
+            if Heap.naoExisteEm(i, historico) and Heap.naoExisteEm(i, heap):
+                Heap.aumentar_chave(heap,len(heap),Tabuleiro(i , topo.g + 1, topo.sequencia))
 
     if(len(heap) == 0):
         print("sem solucao")
