@@ -5,6 +5,7 @@ from tkinter import ttk
 from Heap import *
 from Tabuleiro import *
 import threading
+import os
 
 
 global estadoAtual
@@ -101,7 +102,10 @@ def telaStart():
     janela.minsize(width=800, height=800)
     janela.maxsize(width=800, height=800)
 
-
+    pasta = os.path.dirname(__file__)
+    image_borda = PhotoImage(file= pasta+"\\Borda.png")
+    borda = Label(janela, image = image_borda)
+    borda.place(x = 188, y = 100)
 
     font1=('Times',22,'normal')
     linha,coluna=0,0
@@ -114,7 +118,7 @@ def telaStart():
 
 
     for data in l1:
-        label=ttk.Label(janela,textvariable=data,font=font1, foreground= "red", background="white")
+        label=ttk.Label(janela,textvariable=data,font=font1, foreground= "red")
         
         label.grid(row=linha,column=coluna,padx=50,pady=50)
         coluna=coluna+1
