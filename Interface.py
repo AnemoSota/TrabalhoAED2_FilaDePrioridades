@@ -101,10 +101,11 @@ def telaStart():
     janela.title("Quebra-cabeças de 8 peças")
     janela.minsize(width=800, height=800)
     janela.maxsize(width=800, height=800)
+    janela.config(bg = "#C0C0C0")
 
     pasta = os.path.dirname(__file__)
     image_borda = PhotoImage(file= pasta+"\\Borda.png")
-    borda = Label(janela, image = image_borda)
+    borda = Label(janela, image = image_borda, background= "#C0C0C0")
     borda.place(x = 188, y = 100)
 
     font1=('Times',22,'normal')
@@ -118,7 +119,7 @@ def telaStart():
 
 
     for data in l1:
-        label=ttk.Label(janela,textvariable=data,font=font1, foreground= "red")
+        label=ttk.Label(janela,textvariable=data,font=font1, foreground= "red", background= "#C0C0C0")
         
         label.grid(row=linha,column=coluna,padx=50,pady=50)
         coluna=coluna+1
@@ -143,25 +144,25 @@ def telaStart():
 
 
     global laabel
-    laabel=ttk.Label(janela, text="aaa", font=('Aerial 18'))
-    laabel.place(relx = indiceX,rely = indiceY,anchor = 'center',x=-60,y=85)
+    laabel=ttk.Label(janela, text="tessssteeeeeeeesdeasdasda", font=('Aerial 18'), wraplength= 300)
+    laabel.place(relx = indiceX,rely = indiceY,anchor = 'center',y=50)
 
 
 
-    Cima= Button(janela, text="↑", command= trocaUp)
-    Cima.place(x=360,y=100)
+    Cima= Button(janela, text="↑", command= trocaUp )
+    Cima.place(x=360,y=180)
     Cima.configure(height = 5,width = 10)
 
     Esquerda= Button(janela, text="←", command= trocaLeft)
-    Esquerda.place(x=100,y=360)
+    Esquerda.place(x=180,y=360)
     Esquerda.configure(height = 5,width = 10)
 
     Direita= Button(janela, text="→", command= trocaRight)
-    Direita.place(x=600,y=360)
+    Direita.place(x=530,y=360)
     Direita.configure(height = 5,width = 10)
 
     Baixo= Button(janela, text=" ↓", command= trocaDown)
-    Baixo.place(x=360,y=600)
+    Baixo.place(x=360,y=530)
     Baixo.configure(height = 5,width = 10)
 
     janela.mainloop()
