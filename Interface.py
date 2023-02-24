@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from heap import *
 from Tabuleiro import *
+import threading
 
 
 global estadoAtual
@@ -64,6 +65,9 @@ def trocaRight():
         zero += 1
         atualiza()
 
+def chamaResolver():
+    threading.Thread(target=resolver).start()
+
 def resolver():
     global estadoAtual
     global podeAlterar
@@ -75,10 +79,10 @@ def resolver():
 
     if saida != False:
         for i in saida:
-            sleep(2)
             imprimeTabuleiro(i)
             estadoAtual = i
             atualiza()
+            sleep(1)
         zero = 0
 
     podeAlterar = True
@@ -131,7 +135,7 @@ geraAleatoriosBotao.place(x=10,y=10)
 geraAleatoriosBotao.configure(height = 10,
                              width = 20)
 
-Resolver= Button(janela, text="Resolver", command= resolver)
+Resolver= Button(janela, text="Resolver", command= chamaResolver)
 Resolver.place(x=640,y=10)
 Resolver.configure(height = 10,width = 20)
 
