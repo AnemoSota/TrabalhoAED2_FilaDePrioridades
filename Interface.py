@@ -162,7 +162,10 @@ def atualiza():
     global l1
 
     for i in range(9):
-        l1[i].set(estadoAtual[i])
+        if estadoAtual[i] != 0:
+            l1[i].set(estadoAtual[i])
+        else:
+            l1[i].set(" ")
 
 def telaStart():
     janela= Tk()
@@ -185,7 +188,10 @@ def telaStart():
 
     for i in range(9):
         l1.append(StringVar())
-        l1[i].set(estadoAtual[i])
+        if estadoAtual[i] != 0:
+            l1[i].set(estadoAtual[i])
+        else:
+            l1[i].set(" ")
 
 
     for data in l1:
