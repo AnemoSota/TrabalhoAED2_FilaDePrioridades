@@ -33,7 +33,7 @@ def chamaAleatorio():
         zero = Tabuleiro.busca_zero(estadoAtual)
         atualiza()
 
-# Funções que fazem a troca da posição vazia com os intens adjacentes a esta
+# Funções que fazem a troca da posição vazia com os itens adjacentes a esta
 
 def trocaUp():
     global estadoAtual
@@ -87,7 +87,7 @@ def trocaRight():
         nova.daemon = True
         nova.start()
 
-# Função que exibe por 1 segundo uma menagem que diz que determinadas ações são invalidas
+# Função que exibe por 1 segundo uma mensagem que diz que determinadas ações são invalidas
 
 def jogadaInvalida():
     global textoLabel
@@ -148,7 +148,7 @@ def teclaRightSeta():
         keyboard.wait("RIGHT")
         trocaRight()
 
-# Funções que criam uma thread diferente para a resolução do tabuleiro, bloqueia os botões
+# Funções que criam uma thread diferente para a resolução do tabuleiro, bloqueiam os botões
 # enquanto o problema esta sendo resolvido e chamam a função que resolve o problema
 
 def chamaResolver():
