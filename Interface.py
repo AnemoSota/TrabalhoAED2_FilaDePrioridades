@@ -21,8 +21,9 @@ zero = Tabuleiro.busca_zero(estadoAtual)
 l1 = []
 podeAlterar = True
 
+# Chama a funcao que cria um tabuleiro aleatorio que possui uma solução
 
-def chamaAle():
+def chamaAleatorio():
     global estadoAtual
     global zero
     global podeAlterar
@@ -31,6 +32,8 @@ def chamaAle():
         estadoAtual = Tabuleiro.gerar_tabuleiro_aleatorio()
         zero = Tabuleiro.busca_zero(estadoAtual)
         atualiza()
+
+# Funções que fazem a troca da posição vazia com os intens adjacentes a esta
 
 def trocaUp():
     global estadoAtual
@@ -84,11 +87,18 @@ def trocaRight():
         nova.daemon = True
         nova.start()
 
+# Função que exibe por 1 segundo uma menagem que diz que determinadas ações são invalidas
+
 def jogadaInvalida():
     global textoLabel
     textoLabel.set("Jogada invalida!")
     time.sleep(1)
     textoLabel.set("")
+
+# Grupo de funções que faz a leitura das teclas A, W, S, D, ←, ↑, ↓, →
+# diretamente do teclado e enviam os comandos para as funções de movimentação da posição vazia.
+# Estas funções sao threads pois a criação de threads permite que estas 
+# leituras sejam independentes da atualização da interface grafica.
 
 def teclaUp():
     global teclado
@@ -138,6 +148,9 @@ def teclaRightSeta():
         keyboard.wait("RIGHT")
         trocaRight()
 
+# Funções que criam uma thread diferente para a resolução do tabuleiro, bloqueia os botões
+# enquanto o problema esta sendo resolvido e chamam a função que resolve o problema
+
 def chamaResolver():
     resolvedor = threading.Thread(target=resolver)
     resolvedor.daemon = True
@@ -167,6 +180,8 @@ def resolver():
 
     podeAlterar = True
 
+# Função que exibe uma mensagem enquanto o programa esta processando a solução
+
 def mensagemDeProcessamento():
     global processando
     global textoLabel
@@ -182,6 +197,8 @@ def mensagemDeProcessamento():
         time.sleep(0.2)
     textoLabel.set("")
 
+# Função que atualiza o estado do tabuleiro exibido na interface
+
 def atualiza():
     global estadoAtual
     global l1
@@ -191,6 +208,8 @@ def atualiza():
             l1[i].set(estadoAtual[i])
         else:
             l1[i].set(" ")
+
+# Função que cria a interface e inicializa os seus objetos
 
 def telaStart():
     janela= tkinter.Tk()
@@ -211,6 +230,7 @@ def telaStart():
     indiceX=0.5
     indiceY=0.5
 
+    global l1
     for i in range(9):
         l1.append(tkinter.StringVar())
         if estadoAtual[i] != 0:
@@ -234,7 +254,7 @@ def telaStart():
             indiceX=0.5
 
 
-    geraAleatoriosBotao= tkinter.Button(janela, text="Gerar aleatorios",command= chamaAle)
+    geraAleatoriosBotao= tkinter.Button(janela, text="Gerar aleatorios",command= chamaAleatorio)
     geraAleatoriosBotao.place(x=10,y=10)
 
     geraAleatoriosBotao.configure(height = 10, width = 20)

@@ -3,6 +3,7 @@
 #   FUNÇÕES PARA HEAP   #
 #########################
 
+# Realiza a operacao mim_heapfy
 def min_heapify (lista, raiz):
     index_menor = raiz
     tamanho_lista = len(lista)
@@ -53,6 +54,7 @@ def troca(lista, p1, p2) :
 	lista[p1] = lista[p2]
 	lista[p2] = aux
 
+# Verifica se o estado esta presente na lista passado 
 def naoExisteEm(estado, lista):
 	naoExiste = 1
 	

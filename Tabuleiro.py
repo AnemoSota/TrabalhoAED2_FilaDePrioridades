@@ -1,6 +1,9 @@
+#########################################################
+#   Funções para manipulação e resolução do tabuleiro   #
+#########################################################
 
 import Heap
-import random
+from random import shuffle
 
 class Tabuleiro:
     def __init__(self, vetor, passos, historico):
@@ -10,28 +13,17 @@ class Tabuleiro:
         self.g = passos
         self.h = calcular_heuristica(self.tabuleiro)
         self.f = self.g + self.h    # f(x) = g(x) + h(x)
+        # f(x) é o "custo" total para resolucao apartir do estado X
+        # g(x) é a somatoria dos custos anteriores
+        # h(x) é a estimativa de custo para a resolução
 
+
+    # Funcao usada para comparação entre objetos Tabuleiros 
     def __lt__(self, other):
         if self.f != other.f:
             return self.f < other.f
         return False
-    
-    def __str__(self):
-        return str(self.tabuleiro)
-    
-def imprimeTabuleiro(vetor):
-    print("*-----------*")
-    print("| %d | %d | %d |" %(vetor[0], vetor[1], vetor[2]))
-    print("|---+---+---|")
-    print("| %d | %d | %d |" %(vetor[3], vetor[4], vetor[5]))
-    print("|---+---+---|")
-    print("| %d | %d | %d |" %(vetor[6], vetor[7], vetor[8]))
-    print("*-----------*")
-    print()
-
-
-
-
+       
 # calcula uma estimativa de passos que sao necessarios para resolver o tabuleiro   
 def calcular_heuristica(tabuleiro):
     h = 0
@@ -45,9 +37,9 @@ def calcular_heuristica(tabuleiro):
 # Gera um tabuleiro aleatorio que exista resolucao
 def gerar_tabuleiro_aleatorio():
     tabuleiro = [0,1,2,3,4,5,6,7,8]
-    random.shuffle(tabuleiro)
+    shuffle(tabuleiro)
     while existe_resolucao(tabuleiro) == False:
-        random.shuffle(tabuleiro)
+        shuffle(tabuleiro)
     return tabuleiro
 
 
@@ -88,6 +80,7 @@ def contar_inversoes(tabuleiro):
 
     return inversoes
 
+# Faz a busca pelo elemento zero presente no vetor e retorna o indice nesse vetor
 def busca_zero(lista):
     i = 0
     while (i < len(lista)) and (lista[i] != 0):
@@ -110,6 +103,7 @@ def trocavel(i, j):
 
     return t
 
+# Calcula todas as possiveis trocas que possam ser realizadas(nas 4 direcoes) e retorna um vetor com todas elas
 def trocas(vetor, i):
     possiveis = []
 
@@ -139,6 +133,9 @@ def trocas(vetor, i):
 
     return possiveis
 
+# Busca a solucao para o tabuleiro com o menor custo
+# Caso nao haja solucao, retorna False
+# Caso haja solucao, retorna o objeto da solucao com historico de passo a passo
 def resolve(entrada):
 
     heap = []
@@ -159,7 +156,7 @@ def resolve(entrada):
                 Heap.aumentar_chave(heap,len(heap),Tabuleiro(i , topo.g + 1, topo.sequencia))
 
     if(len(heap) == 0):
-        print("sem solucao")
+
         return False
     else:
         heap[0].sequencia.append(heap[0].tabuleiro)
