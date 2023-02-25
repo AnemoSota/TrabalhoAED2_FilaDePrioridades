@@ -1,9 +1,8 @@
 
-from time import sleep
-from tkinter import *
-from tkinter import ttk
-from Heap import *
-from Tabuleiro import *
+import Heap
+import Tabuleiro
+import tkinter
+import time
 import threading
 import keyboard
 import os
@@ -18,7 +17,7 @@ global textoLabel
 global processando
 
 estadoAtual = list(range(9))
-zero = busca_zero(estadoAtual)
+zero = Tabuleiro.busca_zero(estadoAtual)
 l1 = []
 podeAlterar = True
 
@@ -29,16 +28,16 @@ def chamaAle():
     global podeAlterar
 
     if podeAlterar:
-        estadoAtual = gerar_tabuleiro_aleatorio()
-        zero = busca_zero(estadoAtual)
+        estadoAtual = Tabuleiro.gerar_tabuleiro_aleatorio()
+        zero = Tabuleiro.busca_zero(estadoAtual)
         atualiza()
 
 def trocaUp():
     global estadoAtual
     global zero
 
-    if podeAlterar and trocavel(zero, zero-3):
-        troca(estadoAtual, zero, zero-3)
+    if podeAlterar and Tabuleiro.trocavel(zero, zero-3):
+        Heap.troca(estadoAtual, zero, zero-3)
         zero -= 3
         atualiza()
     else:
@@ -50,8 +49,8 @@ def trocaDown():
     global estadoAtual
     global zero
 
-    if podeAlterar and trocavel(zero, zero+3):
-        troca(estadoAtual, zero, zero+3)
+    if podeAlterar and Tabuleiro.trocavel(zero, zero+3):
+        Heap.troca(estadoAtual, zero, zero+3)
         zero += 3
         atualiza()
     else:
@@ -63,8 +62,8 @@ def trocaLeft():
     global estadoAtual
     global zero
 
-    if podeAlterar and trocavel(zero, zero-1):
-        troca(estadoAtual, zero, zero-1)
+    if podeAlterar and Tabuleiro.trocavel(zero, zero-1):
+        Heap.troca(estadoAtual, zero, zero-1)
         zero -= 1
         atualiza()
     else:
@@ -76,8 +75,8 @@ def trocaRight():
     global estadoAtual
     global zero
 
-    if podeAlterar and trocavel(zero, zero+1):
-        troca(estadoAtual, zero, zero+1)
+    if podeAlterar and Tabuleiro.trocavel(zero, zero+1):
+        Heap.troca(estadoAtual, zero, zero+1)
         zero += 1
         atualiza()
     else:
@@ -88,7 +87,7 @@ def trocaRight():
 def jogadaInvalida():
     global textoLabel
     textoLabel.set("Jogada invalida!")
-    sleep(1)
+    time.sleep(1)
     textoLabel.set("")
 
 def teclaUp():
@@ -140,9 +139,9 @@ def teclaRightSeta():
         trocaRight()
 
 def chamaResolver():
-    nova = threading.Thread(target=resolver)
-    nova.daemon = True
-    nova.start()
+    resolvedor = threading.Thread(target=resolver)
+    resolvedor.daemon = True
+    resolvedor.start()
 
 def resolver():
     global estadoAtual
@@ -157,15 +156,14 @@ def resolver():
     nova.daemon = True
     nova.start()
 
-    saida = resolve(estadoAtual)
+    saida = Tabuleiro.resolve(estadoAtual)
 
-    if saida != False:
-        processando = False
-        for i in saida:
-            estadoAtual = i
-            atualiza()
-            sleep(1)
-        zero = 0
+    processando = False
+    for i in saida:
+        estadoAtual = i
+        atualiza()
+        time.sleep(1)
+    zero = 0
 
     podeAlterar = True
 
@@ -174,16 +172,15 @@ def mensagemDeProcessamento():
     global textoLabel
 
     while processando:
-        
         textoLabel.set("Processando    ")
-        sleep(0.2)
+        time.sleep(0.2)
         textoLabel.set("Processando .  ")
-        sleep(0.2)
+        time.sleep(0.2)
         textoLabel.set("Processando .. ")
-        sleep(0.2)
+        time.sleep(0.2)
         textoLabel.set("Processando ...")
-        sleep(0.2)
-        textoLabel.set("")
+        time.sleep(0.2)
+    textoLabel.set("")
 
 def atualiza():
     global estadoAtual
@@ -196,7 +193,7 @@ def atualiza():
             l1[i].set(" ")
 
 def telaStart():
-    janela= Tk()
+    janela= tkinter.Tk()
 
 
     janela.title("Quebra-cabeças de 8 peças")
@@ -205,8 +202,8 @@ def telaStart():
     janela.config(bg = "#C0C0C0")
 
     pasta = os.path.dirname(__file__)
-    image_borda = PhotoImage(file= pasta+"\\Borda.png")
-    borda = Label(janela, image = image_borda, background= "#C0C0C0")
+    image_borda = tkinter.PhotoImage(file= pasta+"\\Borda.png")
+    borda = tkinter.Label(janela, image = image_borda, background= "#C0C0C0")
     borda.place(x = 188, y = 100)
 
     font1=('Times',22,'normal')
@@ -215,7 +212,7 @@ def telaStart():
     indiceY=0.5
 
     for i in range(9):
-        l1.append(StringVar())
+        l1.append(tkinter.StringVar())
         if estadoAtual[i] != 0:
             l1[i].set(estadoAtual[i])
         else:
@@ -223,7 +220,7 @@ def telaStart():
 
 
     for data in l1:
-        label=ttk.Label(janela,textvariable=data,font=font1, foreground= "red", background= "#C0C0C0")
+        label=tkinter.Label(janela,textvariable=data,font=font1, foreground= "red", background= "#C0C0C0")
         
         label.grid(row=linha,column=coluna,padx=50,pady=50)
         coluna=coluna+1
@@ -237,36 +234,36 @@ def telaStart():
             indiceX=0.5
 
 
-    geraAleatoriosBotao= Button(janela, text="Gerar aleatorios",command= chamaAle)
+    geraAleatoriosBotao= tkinter.Button(janela, text="Gerar aleatorios",command= chamaAle)
     geraAleatoriosBotao.place(x=10,y=10)
 
     geraAleatoriosBotao.configure(height = 10, width = 20)
 
-    Resolver= Button(janela, text="Resolver", command= chamaResolver)
+    Resolver= tkinter.Button(janela, text="Resolver", command= chamaResolver)
     Resolver.place(x=640,y=10)
     Resolver.configure(height = 10,width = 20)
 
 
     global textoLabel
-    textoLabel = StringVar()
-    laabel=ttk.Label(janela, textvariable=textoLabel, font=('Aerial 18'), wraplength= 300)
+    textoLabel = tkinter.StringVar()
+    laabel = tkinter.Label(janela, textvariable=textoLabel, font=('Aerial 18'), wraplength= 300)
     laabel.place(relx = indiceX,rely = indiceY,anchor = 'center',y=50)
 
 
 
-    Cima= Button(janela, text="↑", command= trocaUp )
+    Cima= tkinter.Button(janela, text="↑", command= trocaUp )
     Cima.place(x=360,y=180)
     Cima.configure(height = 5,width = 10)
 
-    Esquerda= Button(janela, text="←", command= trocaLeft)
+    Esquerda= tkinter.Button(janela, text="←", command= trocaLeft)
     Esquerda.place(x=190,y=360)
     Esquerda.configure(height = 5,width = 10)
 
-    Direita= Button(janela, text="→", command= trocaRight)
+    Direita= tkinter.Button(janela, text="→", command= trocaRight)
     Direita.place(x=530,y=360)
     Direita.configure(height = 5,width = 10)
 
-    Baixo= Button(janela, text=" ↓", command= trocaDown)
+    Baixo= tkinter.Button(janela, text=" ↓", command= trocaDown)
     Baixo.place(x=360,y=530)
     Baixo.configure(height = 5,width = 10)
 
