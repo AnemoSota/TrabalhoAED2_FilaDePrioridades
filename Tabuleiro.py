@@ -54,7 +54,7 @@ def existe_resolucao(tabuleiro):
         return False
 
 
-# faz a contagem das inversoes ha ser feitas no tabuleiro 
+# faz a contagem das inversoes ha serem feitas no tabuleiro 
 # Se os elementos posteriores ao atual analisado forem menores, isso configura uma inversao 
 def contar_inversoes(tabuleiro):
     i = 0
@@ -135,7 +135,7 @@ def trocas(vetor, i):
 
 # Busca a solucao para o tabuleiro com o menor custo
 # Caso nao haja solucao, retorna False
-# Caso haja solucao, retorna o objeto da solucao com historico de passo a passo
+# Caso haja solucao, retorna o objeto da solucao com historico do passo a passo
 def resolve(entrada):
 
     heap = []
